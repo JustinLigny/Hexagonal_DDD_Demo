@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Optional;
+
 @Getter
 @ToString
 public final class Project {
@@ -24,17 +26,41 @@ public final class Project {
     @Valid
     private final Reference reference;
 
-    @NotNull(message = "Archived cannot ")
+    @NotNull(message = "Archived cannot be null")
+    private final Boolean archived;
 
-    public Project(
+    private Project(
             final ProjectId id,
             final ProjectName name,
-            final Reference reference) {
+            final Reference reference,
+            final Boolean archived) {
 
         this.id = id;
         this.name = name;
         this.reference = reference;
+        this.archived = archived;
 
         Validation.validate(this);
+    }
+
+    public static Project withoutId(
+            final ProjectName projectName,
+            final Reference reference,
+            final Boolean archived) {
+
+        return new Project(null, projectName, reference, archived);
+    }
+
+    public static Project withId(
+            final ProjectId id,
+            final ProjectName projectName,
+            final Reference reference,
+            final Boolean archived) {
+
+        return new Project(id, projectName, reference, archived);
+    }
+
+    public Optional<ProjectId> getId() {
+        return Optional.ofNullable(id);
     }
 }
