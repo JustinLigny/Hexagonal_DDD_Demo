@@ -55,7 +55,16 @@ class LastNameTest {
 
         Set<ConstraintViolation<LastName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals(1, violations.size(), "Expected exactly one violation for blank first name.");
+        assertEquals(1, violations.size(), "Expected exactly one violation for blank last name.");
+    }
+
+    @Test
+    void shouldRejectLastNameWithOnlySpaces() {
+        systemUnderTest = new LastName(" ");
+
+        Set<ConstraintViolation<LastName>> violations = validator.validate(systemUnderTest);
+
+        assertEquals(1, violations.size(), "Expected exactly one violation for blank last name.");
     }
 
     @Test
@@ -74,7 +83,7 @@ class LastNameTest {
 
         Set<ConstraintViolation<LastName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Last name cannot be blank", violations.iterator().next().getMessage(),
+        assertEquals("Last name cannot be null or blank", violations.iterator().next().getMessage(),
                 "Expected exactly one violation for null last name.");
     }
 
@@ -84,8 +93,18 @@ class LastNameTest {
 
         Set<ConstraintViolation<LastName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Last name cannot be blank", violations.iterator().next().getMessage(),
+        assertEquals("Last name cannot be null or blank", violations.iterator().next().getMessage(),
                 "Expected exactly one violation for blank last name.");
+    }
+
+    @Test
+    void shouldRejectLastNameWithOnlySpacesMessage() {
+        systemUnderTest = new LastName(" ");
+
+        Set<ConstraintViolation<LastName>> violations = validator.validate(systemUnderTest);
+
+        assertEquals("Last name cannot be null or blank", violations.iterator().next().getMessage(),
+                "Expected specific error message for blank last name.");
     }
 
     @Test

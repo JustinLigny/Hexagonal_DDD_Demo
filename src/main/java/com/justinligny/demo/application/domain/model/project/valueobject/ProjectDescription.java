@@ -1,5 +1,6 @@
 package com.justinligny.demo.application.domain.model.project.valueobject;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -9,9 +10,9 @@ import lombok.ToString;
 @EqualsAndHashCode
 @AllArgsConstructor
 @ToString
-public final class Description {
+public final class ProjectDescription {
 
-    @NotNull(message = "Description cannot be null")
-    @Size(max = 500, message = "Description cannot exceed 500 characters")
+    @NotNull(message = "Project description cannot be null")
+    @Size(max = 500, message = "Project description cannot exceed 500 characters")
     private final String description;
 }

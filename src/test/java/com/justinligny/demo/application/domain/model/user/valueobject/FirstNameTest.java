@@ -58,6 +58,15 @@ class FirstNameTest {
     }
 
     @Test
+    void shouldRejectFirstNameWithOnlySpaces() {
+        systemUnderTest = new FirstName(" ");
+
+        Set<ConstraintViolation<FirstName>> violations = validator.validate(systemUnderTest);
+
+        assertEquals(1, violations.size(), "Expected exactly one violation for blank first name.");
+    }
+
+    @Test
     void shouldRejectTooLongFirstName() {
         systemUnderTest = new FirstName("J".repeat(41));
 
@@ -72,7 +81,7 @@ class FirstNameTest {
 
         Set<ConstraintViolation<FirstName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("First name cannot be blank", violations.iterator().next().getMessage(),
+        assertEquals("First name cannot be null or blank", violations.iterator().next().getMessage(),
                 "Expected specific error message for null first name.");
     }
 
@@ -82,9 +91,20 @@ class FirstNameTest {
 
         Set<ConstraintViolation<FirstName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("First name cannot be blank", violations.iterator().next().getMessage(),
+        assertEquals("First name cannot be null or blank", violations.iterator().next().getMessage(),
                 "Expected specific error message for blank first name.");
     }
+
+    @Test
+    void shouldRejectFirstNameWithOnlySpacesMessage() {
+        systemUnderTest = new FirstName(" ");
+
+        Set<ConstraintViolation<FirstName>> violations = validator.validate(systemUnderTest);
+
+        assertEquals("First name cannot be null or blank", violations.iterator().next().getMessage(),
+                "Expected specific error message for blank first name.");
+    }
+
 
     @Test
     void shouldRejectTooLongFirstNameMessage() {

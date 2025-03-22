@@ -46,7 +46,6 @@ class ProjectNameTest {
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
         assertEquals(1, violations.size(), "Expected exactly one violation for null project name.");
-        assertEquals("Project name cannot be null", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -56,7 +55,15 @@ class ProjectNameTest {
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
         assertEquals(1, violations.size(), "Expected exactly one violation for blank project name.");
-        assertEquals("Project name can only contain letters and spaces", violations.iterator().next().getMessage());
+    }
+
+    @Test
+    void shouldRejectProjectNameWithOnlySpaces() {
+        systemUnderTest = new ProjectName(" ");
+
+        Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
+
+        assertEquals(1, violations.size(), "Expected exactly one violation for blank project name.");
     }
 
     @Test
@@ -66,7 +73,6 @@ class ProjectNameTest {
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
         assertEquals(1, violations.size(), "Expected exactly one violation for a too long project name.");
-        assertEquals("Project name cannot exceed 40 characters", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -76,9 +82,7 @@ class ProjectNameTest {
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
         assertEquals(1, violations.size(), "Expected exactly one violation for a project name with invalid characters.");
-        assertEquals("Project name can only contain letters and spaces", violations.iterator().next().getMessage());
     }
-
 
     @Test
     void shouldRejectNullProjectNameMessage() {
@@ -86,7 +90,8 @@ class ProjectNameTest {
 
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Project name cannot be null", violations.iterator().next().getMessage());
+        assertEquals("Project name cannot be null or blank", violations.iterator().next().getMessage(),
+                "Expected specific error message for null description");
     }
 
     @Test
@@ -95,7 +100,18 @@ class ProjectNameTest {
 
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Project name can only contain letters and spaces", violations.iterator().next().getMessage());
+        assertEquals("Project name cannot be null or blank", violations.iterator().next().getMessage(),
+                "Expected specific error message for blank description");
+    }
+
+    @Test
+    void shouldRejectProjectNameWithOnlySpacesMessage() {
+        systemUnderTest = new ProjectName(" ");
+
+        Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
+
+        assertEquals("Project name cannot be null or blank", violations.iterator().next().getMessage(),
+                "Expected specific error message for blank description");
     }
 
     @Test
@@ -104,7 +120,8 @@ class ProjectNameTest {
 
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Project name cannot exceed 40 characters", violations.iterator().next().getMessage());
+        assertEquals("Project name cannot exceed 40 characters", violations.iterator().next().getMessage(),
+                "Expected specific error message for too long description");
     }
 
     @Test
@@ -113,6 +130,7 @@ class ProjectNameTest {
 
         Set<ConstraintViolation<ProjectName>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Project name can only contain letters and spaces", violations.iterator().next().getMessage());
+        assertEquals("Project name can only contain letters and spaces", violations.iterator().next().getMessage(),
+                "Expected specific error message for in description containing invalid characters.");
     }
 }

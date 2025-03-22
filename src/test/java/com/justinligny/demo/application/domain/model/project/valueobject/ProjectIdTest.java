@@ -36,8 +36,7 @@ class ProjectIdTest {
 
         Set<ConstraintViolation<ProjectId>> violations = validator.validate(systemUnderTest);
 
-        assertTrue(violations.isEmpty(),
-                "Expected no violations for valid ProjectId.");
+        assertTrue(violations.isEmpty(), "Expected no violations for valid ProjectId.");
     }
 
     @Test
@@ -46,8 +45,7 @@ class ProjectIdTest {
 
         Set<ConstraintViolation<ProjectId>> violations = validator.validate(systemUnderTest);
 
-        assertEquals(1, violations.size(),
-                "Expected exactly one violation for null ProjectId.");
+        assertEquals(1, violations.size(), "Expected exactly one violation for null ProjectId.");
     }
 
     @Test
@@ -56,8 +54,7 @@ class ProjectIdTest {
 
         Set<ConstraintViolation<ProjectId>> violations = validator.validate(systemUnderTest);
 
-        assertEquals(1, violations.size(),
-                "Expected exactly one violation for negative ProjectId.");
+        assertEquals(1, violations.size(), "Expected exactly one violation for negative ProjectId.");
     }
 
     @Test

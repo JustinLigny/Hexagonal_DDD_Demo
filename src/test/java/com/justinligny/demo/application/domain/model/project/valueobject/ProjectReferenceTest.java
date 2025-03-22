@@ -13,11 +13,11 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ReferenceTest {
+class ProjectReferenceTest {
 
     private static ValidatorFactory validatorFactory;
     private static Validator validator;
-    private Reference systemUnderTest;
+    private ProjectReference systemUnderTest;
 
     @BeforeAll
     static void setUp() {
@@ -32,67 +32,67 @@ class ReferenceTest {
 
     @Test
     void shouldAcceptValidReference() {
-        systemUnderTest = new Reference("ABCD1234");
+        systemUnderTest = new ProjectReference("ABCD1234");
 
-        Set<ConstraintViolation<Reference>> violations = validator.validate(systemUnderTest);
+        Set<ConstraintViolation<ProjectReference>> violations = validator.validate(systemUnderTest);
 
         assertTrue(violations.isEmpty(), "Expected no violations for a valid reference.");
     }
 
     @Test
     void shouldDetectOneViolationForNullReference() {
-        systemUnderTest = new Reference(null);
+        systemUnderTest = new ProjectReference(null);
 
-        Set<ConstraintViolation<Reference>> violations = validator.validate(systemUnderTest);
+        Set<ConstraintViolation<ProjectReference>> violations = validator.validate(systemUnderTest);
 
         assertEquals(1, violations.size(), "Expected exactly one violation for null reference.");
     }
 
     @Test
     void shouldHaveCorrectMessageForNullReference() {
-        systemUnderTest = new Reference(null);
+        systemUnderTest = new ProjectReference(null);
 
-        Set<ConstraintViolation<Reference>> violations = validator.validate(systemUnderTest);
+        Set<ConstraintViolation<ProjectReference>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Reference cannot be blank", violations.iterator().next().getMessage(),
+        assertEquals("Project reference cannot be blank", violations.iterator().next().getMessage(),
                 "Expected specific error message for null reference.");
     }
 
     @Test
     void shouldDetectOneViolationForInvalidReferenceLength() {
-        systemUnderTest = new Reference("ABC123");
+        systemUnderTest = new ProjectReference("ABC123");
 
-        Set<ConstraintViolation<Reference>> violations = validator.validate(systemUnderTest);
+        Set<ConstraintViolation<ProjectReference>> violations = validator.validate(systemUnderTest);
 
         assertEquals(1, violations.size(), "Expected exactly one violation for reference length not equal to 8.");
     }
 
     @Test
     void shouldHaveCorrectMessageForInvalidReferenceLength() {
-        systemUnderTest = new Reference("ABC123");
+        systemUnderTest = new ProjectReference("ABC123");
 
-        Set<ConstraintViolation<Reference>> violations = validator.validate(systemUnderTest);
+        Set<ConstraintViolation<ProjectReference>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Reference must be 8 characters long, using only A-Z and 0-9", violations.iterator().next().getMessage(),
+        assertEquals("Project reference must be 8 characters long, using only A-Z and 0-9", violations.iterator().next().getMessage(),
                 "Expected specific error message for reference length.");
     }
 
     @Test
     void shouldDetectOneViolationForInvalidReferenceCharacters() {
-        systemUnderTest = new Reference("ABC123!@");
+        systemUnderTest = new ProjectReference("ABC123!@");
 
-        Set<ConstraintViolation<Reference>> violations = validator.validate(systemUnderTest);
+        Set<ConstraintViolation<ProjectReference>> violations = validator.validate(systemUnderTest);
 
         assertEquals(1, violations.size(), "Expected exactly one violation for reference containing invalid characters.");
     }
 
     @Test
     void shouldHaveCorrectMessageForInvalidReferenceCharacters() {
-        systemUnderTest = new Reference("ABC123!@");
+        systemUnderTest = new ProjectReference("ABC123!@");
 
-        Set<ConstraintViolation<Reference>> violations = validator.validate(systemUnderTest);
+        Set<ConstraintViolation<ProjectReference>> violations = validator.validate(systemUnderTest);
 
-        assertEquals("Reference must be 8 characters long, using only A-Z and 0-9", violations.iterator().next().getMessage(),
+        assertEquals("Project reference must be 8 characters long, using only A-Z and 0-9", violations.iterator().next().getMessage(),
                 "Expected specific error message for reference containing invalid characters.");
     }
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public final class LastName {
 
-    @NotBlank(message = "Last name cannot be blank")
+    @NotBlank(message = "Last name cannot be null or blank")
     @Size(max = 40, message = "Last name cannot exceed 40 characters")
     private final String lastName;
 }
